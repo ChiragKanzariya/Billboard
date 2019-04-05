@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '_3y0d+)@twk&^xtpa11%b0*z@#&bfiv=7@riut34qd18g%8d$&'
+SITE_ID = 1
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -35,11 +36,15 @@ INSTALLED_APPS = [
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
+    'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'advertiser',
     'crispy_forms',
+    'djstripe'
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -139,3 +144,11 @@ BOOTSTRAP4 = {
 LOGIN_REDIRECT_URL="advertiser_home"
 LOGOUT_REDIRECT_URL="billboard_welcome"
 LOGIN_URL="advertiser_login"
+
+# STRIPE_PUBLISHABLE = 'pk_test_ul3Z09vYiPxlC2mmh3APfpk700rekRwCtv'
+# STRIPE_SECRET = 'sk_test_UE0fp7A3Or8Ln1dZPkgFELxK00hUlDQkGI'
+STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", "pk_test_ul3Z09vYiPxlC2mmh3APfpk700rekRwCtv")
+STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", "sk_test_UE0fp7A3Or8Ln1dZPkgFELxK00hUlDQkGI")
+DJSTRIPE_WEBHOOK_VALIDATION = "verify_signature"
+DJSTRIPE_WEBHOOK_SECRET = "whsec_rfZg5xPaOIbsC1N6o9ysP3Me1hVjQGSW"
+STRIPE_LIVE_MODE = False

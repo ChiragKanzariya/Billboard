@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^advertiser/', include('advertiser.urls')),
     url(r'^welcome/$', welcome, name='billboard_welcome'),
+    url(r'^payments/', include('djstripe.urls', namespace="djstripe")),
 ]

@@ -11,6 +11,9 @@ Home: {{ user.username }}
   <a style="margin-left:515px;" href="{% url 'add_video' %}">
     <button type="submit" class="btn btn-success">Request</button>
   </a>
+  <a href="{% url 'billboard_payment' %}">
+    <button type="submit" class="btn btn-success">Payment</button>
+  </a>
   <div>
     <h1>Registered Billboared</h1>
     <form action="{% url 'advertiser_home' %}" style="margin-top:50px;" method="post">

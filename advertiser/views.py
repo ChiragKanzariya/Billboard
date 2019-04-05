@@ -6,7 +6,7 @@ from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.conf import settings
-import datetime
+import datetime 
 
 from advertiser.models import Post, Invitation
 from advertiser.forms import PostForm, InvitationForm, SignUpForm
