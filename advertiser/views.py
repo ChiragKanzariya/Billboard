@@ -6,11 +6,15 @@ from django.views.generic import CreateView, TemplateView
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.conf import settings
+from django.http import HttpResponseRedirect
+from django.contrib.auth.models import User
+from django.http.response import JsonResponse
+from django.views.decorators.http import require_GET, require_POST
+from django.views.decorators.csrf import csrf_exempt
 import datetime 
 
 from advertiser.models import Post, Invitation
 from advertiser.forms import PostForm, InvitationForm, SignUpForm
-
 
 def signup(request):
     if request.method == 'POST':
@@ -70,7 +74,7 @@ def accept_invitation(request, id):
     invitation = get_object_or_404(Invitation, pk=id)
     if not request.user == invitation.to_owner:
         raise PermissionDenied
-    
+
     if request.method == "POST":
         if "accept" in request.POST:
             post = Post.objects.create(
@@ -89,14 +93,6 @@ def accept_invitation(request, id):
                       {'invitation': invitation}  
                      )
 
-
-class PaymentPageView(TemplateView):
-    template_name = "payment.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['pk_test_ul3Z09vYiPxlC2mmh3APfpk700rekRwCtv'] = settings.STRIPE_PUBLISHABLE_KEY
-        return context
 
 
 

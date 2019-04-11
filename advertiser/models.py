@@ -3,6 +3,8 @@ from django.utils.encoding import python_2_unicode_compatible
 from django.db.models import Q
 from django.contrib.auth.models import User
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 @python_2_unicode_compatible
@@ -38,3 +40,6 @@ class Invitation(models.Model):
         help_text="It's always nice to add specific detail here!"
         )
     timestamp = models.DateTimeField(auto_now_add=True)
+
+
+   

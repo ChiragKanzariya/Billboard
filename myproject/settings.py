@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'advertiser',
     'crispy_forms',
-    'djstripe'
+    'webpush',
 ]
 
 
@@ -109,6 +109,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+WEBPUSH_SETTINGS = {
+    "VAPID_PUBLIC_KEY": "BJLIJXU2e4J4nYCn2tkL-Xbqobw87nRMSqrl7S0V-NzFW2pZC2B7JdsPwMdOr4HeaeDlmV0JEYG9X8g3QCu2eaQ",
+    "VAPID_PRIVATE_KEY": "W0BXnleWDzGiJw9tEh5r8ySA4OWcIWIxnP6Dn1liVGY",
+    "VAPID_ADMIN_EMAIL": "chirag9587@gmail.com"
+}
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
@@ -144,11 +150,3 @@ BOOTSTRAP4 = {
 LOGIN_REDIRECT_URL="advertiser_home"
 LOGOUT_REDIRECT_URL="billboard_welcome"
 LOGIN_URL="advertiser_login"
-
-# STRIPE_PUBLISHABLE = 'pk_test_ul3Z09vYiPxlC2mmh3APfpk700rekRwCtv'
-# STRIPE_SECRET = 'sk_test_UE0fp7A3Or8Ln1dZPkgFELxK00hUlDQkGI'
-STRIPE_TEST_PUBLIC_KEY = os.environ.get("STRIPE_TEST_PUBLIC_KEY", "pk_test_ul3Z09vYiPxlC2mmh3APfpk700rekRwCtv")
-STRIPE_TEST_SECRET_KEY = os.environ.get("STRIPE_TEST_SECRET_KEY", "sk_test_UE0fp7A3Or8Ln1dZPkgFELxK00hUlDQkGI")
-DJSTRIPE_WEBHOOK_VALIDATION = "verify_signature"
-DJSTRIPE_WEBHOOK_SECRET = "whsec_rfZg5xPaOIbsC1N6o9ysP3Me1hVjQGSW"
-STRIPE_LIVE_MODE = False
