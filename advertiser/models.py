@@ -15,6 +15,8 @@ class Post(models.Model):
     clip = models.FileField(upload_to='static/upload/', null=True)
     date_to = models.DateField(null=True)
     date_from = models.DateField(null=True)
+    time_to = models.TimeField(null=True)
+    time_from = models.TimeField(null=True)
 
 
 class Invitation(models.Model):
@@ -32,8 +34,10 @@ class Invitation(models.Model):
         )
     title = models.CharField(max_length=200)
     clip = models.FileField(upload_to='static/upload/', null=True)
-    date_to = models.DateField(null=True)
-    date_from = models.DateField(null=True)
+    date_to = models.DateTimeField(null=True)
+    date_from = models.DateTimeField(null=True)
+    time_to = models.TimeField(null=True)
+    time_from = models.TimeField(null=True)
     message = models.CharField(
         max_length=300, blank=True,
         verbose_name="Message",

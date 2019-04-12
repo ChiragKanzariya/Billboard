@@ -83,7 +83,9 @@ def accept_invitation(request, id):
                 title=invitation.title,
                 clip=invitation.clip,
                 date_to=invitation.date_to,
+                time_to=invitation.time_to,
                 date_from=invitation.date_from,
+                time_from=invitation.time_from
             )
         invitation.delete()
         return redirect('advertiser_owner_home')
