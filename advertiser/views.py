@@ -12,6 +12,7 @@ from django.http.response import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
 from django.views.decorators.csrf import csrf_exempt
 import datetime 
+import numpy as np
 
 from advertiser.models import Post, Invitation
 from advertiser.forms import PostForm, InvitationForm, SignUpForm
@@ -77,16 +78,21 @@ def accept_invitation(request, id):
 
     if request.method == "POST":
         if "accept" in request.POST:
-            post = Post.objects.create(
-                owner=invitation.to_owner,
-                author=invitation.from_author,
-                title=invitation.title,
-                clip=invitation.clip,
-                date_to=invitation.date_to,
-                time_to=invitation.time_to,
-                date_from=invitation.date_from,
-                time_from=invitation.time_from
-            )
+
+            diff = int(invitation.date_from.strftime('%d')) - int(invitation.date_to.strftime('%d'))
+            all_date = np.array([invitation.date_to + datetime.timedelta(days=i) for i in range(diff+1) ])
+
+            for i in range(diff+1):
+                post = Post.objects.create(
+                    owner=invitation.to_owner,
+                    author=invitation.from_author,
+                    title=invitation.title,
+                    clip=invitation.clip,
+                    date_to=all_date[i],
+                    time_to=invitation.time_to,
+                    date_from=all_date[i],
+                    time_from=invitation.time_from
+                )
         invitation.delete()
         return redirect('advertiser_owner_home')
     else:   

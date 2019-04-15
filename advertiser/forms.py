@@ -1,3 +1,4 @@
+import time
 import datetime
 import numpy as np
 from django import forms
@@ -70,22 +71,31 @@ class InvitationForm(ModelForm):
         time_from = self.cleaned_data.get('time_from') 
         ori_date_to = datetime.datetime.strptime(date_to, "%Y-%m-%d")
         ori_date_from = datetime.datetime.strptime(date_from, "%Y-%m-%d")
-        # ori_time_to = datetime.datetime.strptime(time_to, "%H:%M")
-        # ori_time_from = datetime.datetime.strptime(time_from, "%H:%M")
-
-        # dt_array = np.array([ori_date_to + datetime.timedelta(hours=i) for i in range(24)])
-        # print(dt_array)
+        ori_time_to = datetime.datetime.strptime(time_to, "%H:%M").time()
+        ori_time_from = datetime.datetime.strptime(time_from, "%H:%M").time()
         
         # delta = ori_date_from - ori_date_to
         # my_range = delta.days
 
-        # single_date_to = np.array([ori_date_to + datetime.timedelta(days=i) for i in range(my_range+1)])
-        # dt_array = np.array([single_date_to + datetime.timedelta(hours=i) for i in range(24)])
-  
-        date_to_from_exists = Post.objects.filter(date_to__lte=ori_date_to, date_from__gte=ori_date_from).exists()
+        # single_date_to = np.array([ori_date_to + datetime.timedelta(days=i)for i in range(my_range+1)])
+        # for i in range(my_range+1):
+        #     change = '{0.month}/{0.day}/{0.year}'.format(single_date_to[i])
+        #     print(change)
+        #     range_to_from_exists = Post.objects.filter(date_to__contains=change, date_from__contains=change)
         # time_to_from_exists = Post.objects.filter(time_to__lte=ori_time_to, time_from__gte=ori_time_from).exists()
-        if date_to_from_exists :
-            raise forms.ValidationError("This dates is already booked for billboard")
+        # if date_to_from_exists :
+        #     raise forms.ValidationError("This dates is already booked for billboard")
+        a =[]
+        for p in Post.objects.raw("SELECT * from advertiser_post WHERE (date_to BETWEEN '"+date_to+"' AND '"+date_from+"')"):
+            a.append(p.id)
+            aa = ", ".join(str(x) for x in a)
+            print(aa)
+
+        for t in Post.objects.raw("SELECT * from advertiser_post WHERE ((time_to BETWEEN '"+time_to+"' AND '"+time_from+"') AND id IN ("+aa+"))"):
+            print(t.time_to)
+            print(type(t))
+            if t is not None:
+                raise forms.ValidationError("This dates is already booked for billboard")
         super(InvitationForm, self).clean()
         
 
